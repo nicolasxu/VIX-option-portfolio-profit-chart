@@ -1,0 +1,24 @@
+{
+  "name": "VIS Option/Future Chart",
+  "version": "0.1",
+  "authors": [
+    "Shenxin(Nicolas) Xu <xu.shenxin@gmail.com>"
+  ],
+  "description": "use d3js to chart the profit/loss graph of hedged position containing both VIX options and VIX futures",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "d3": "~3.5.0"
+  }
+}

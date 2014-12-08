@@ -183,10 +183,15 @@ var f1 = new Future(shortFuture);
 console.log(f1.profit(15));
 
 
-function Portfolio (options) {
+function Portfolio (option) {
 
 	// position is an array
-	this.position = options.position;
+	if(option) {
+
+		this.positions = option.positions;
+	} else {
+		this.positions = [];
+	}
 
 }
 
@@ -194,25 +199,36 @@ Portfolio.prototype.profit = function (price) {
 	
 	var profit = 0;
 	
-	for(var i = 0; i< this.position.length; i++) {
-		profit = profit + this.position[i].instrument.profit(price)*this.position[i].number;
+	for(var i = 0; i< this.positions.length; i++) {
+
+		profit = profit + this.positions[i].instrument.profit(price) * this.positions[i].number;
 	}
 
 	return profit;
 };
 
+Portfolio.prototype.add = function (position) {
+	this.positions.push(position);
+};
+
+Portfolio.prototype.remove = function (index) {
+
+	this.positions.splice(index, 1);
+	
+};
+
 Portfolio.prototype.maxShiftPrice = function () {
 	var maxPrice = 0;
 	var thisShiftPrice = 0;
-	for(var i = 0; i < this.position.length; i++) {
-		thisShiftPrice = this.position[i].instrument.strikePrice || this.position[i].instrument.dealPrice;
+	for(var i = 0; i < this.positions.length; i++) {
+		thisShiftPrice = this.positions[i].instrument.strikePrice || this.positions[i].instrument.dealPrice;
 		maxPrice = Math.max(maxPrice, thisShiftPrice);
 	}
 
 	return maxPrice;
 };
 
-var p1 = new Portfolio({position: [{instrument: o1, number: 10}, {instrument: f1, number: 1}]});
+var p1 = new Portfolio({positions: [{instrument: o1, number: 10}, {instrument: f1, number: 1}]});
 
 // console.info('p1.profit(33): ', p1.profit(10));
 

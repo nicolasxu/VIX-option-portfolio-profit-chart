@@ -3,6 +3,14 @@ angular.module('optionChart', [])
 
 		$scope.assetClass = 'option';
 
+		$scope.premium = 1.25;
+
+		$scope.strikePrice = 13.5;
+
+		$scope.comission = 1.9;
+
+		$scope.dealPrice = 14.9;
+
 		$scope.assetClassSelects = ['option', 'future'];
 
 		$scope.longShortSelects = ['long', 'short'];
@@ -83,6 +91,11 @@ angular.module('optionChart', [])
 			$scope.data.portfolio.add({instrument: asset, number: $scope.contractNumber });
 			console.info('$scope.data.portfolio', $scope.data.portfolio);
 
+		};
+
+		$scope.removePosition = function (index) {
+
+			$scope.data.portfolio.remove(index);
 		};
 
 

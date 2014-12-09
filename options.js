@@ -259,4 +259,4 @@ function calcData(p) {
 
 var dataArray = calcData(p1);
 
-	console.log(dataArray);
+	// console.log(dataArray);

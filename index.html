@@ -4,10 +4,13 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Option Chart</title>
-	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
 	<script src="options.js"></script>
 	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/bower_components/jquery/dist/jquery.js"></script>
+	
 	<script src="/app.js"></script>
+	<script src="./clickEdit.js"></script>
 	
 </head>
 <body ng-app="optionChart" ng-controller="inputCtrl">
@@ -15,118 +18,124 @@
 	<p>{{data.portfolio.positions[0].assetClass }}</p>
 
 
-	<div class="input-container" >
+	<div class="input-container clearfix" >
 		<h3>Add <span>{{assetClass}}</span></h3>
-		<form role="form">
+		<form role="form" class="clearfix">
 
-		  <div class="form-group">
-		    <label for="assetClass">Asset Class</label>
-		    <select name="assetClass" 
-		    id="assetClassInput" 
-		    class="form-control" 
-		    ng-model="assetClass"
-		    ng-options="name for name in assetClassSelects">
-		    </select>
-		  </div>
+			<div class="form-group col-sm-2" >
+		    	<label for="assetClass">Asset Class</label>
+		    	<select name="assetClass" 
+		    	id="assetClassInput" 
+		    	class="form-control" 
+		    	ng-model="assetClass"
+		    	ng-options="name for name in assetClassSelects">
+		    	</select>
+		    </div>
 
-		  <div class="form-group">
-		    <label for="exampleInputPassword1">Long or Short</label>
-		    <select name="longShort" 
-		    id="longShortInput" 
-		    class="form-control" 
-		    ng-model="longShort"
-		    ng-options="name for name in longShortSelects">
-		    </select>
-		  </div>
+		    <div class="form-group col-sm-2">
+		    	<label for="exampleInputPassword1">Long or Short</label>
+		    	<select name="longShort" 
+		    	id="longShortInput" 
+		    	class="form-control" 
+		    	ng-model="longShort"
+		    	ng-options="name for name in longShortSelects">
+		    	</select>
+		    </div>
 
-		  <div class="form-group" ng-show="assetClass=='option'">
-		    <label for="exampleInputPassword1">Call or Put</label>
-		    <select name="callput" 
-		    id="callPutInput" 
-		    class="form-control" 
-		    ng-model="callPut"
-		    ng-options="name for name in callPutSelects">
-		    </select>
-		  </div>
+			<div class="form-group col-sm-2" ng-show="assetClass=='option'">
+			    <label for="exampleInputPassword1">Call or Put</label>
+			    <select name="callput" 
+			    id="callPutInput" 
+			    class="form-control" 
+			    ng-model="callPut"
+			    ng-options="name for name in callPutSelects">
+			    </select>
+			</div>
 
-		  <div class="form-group" ng-show="assetClass=='option'">
-		    <label for="strikePrice">Strike Price</label>
-		    <input type="text" ng-model="strikePrice" 
-		    class="form-control"
-		    id="strikePrice" 
-		    placeholder="Strike Price">
-		  </div>
+		    <div class="form-group col-sm-2" ng-show="assetClass=='option'">
+		        <label for="strikePrice">Strike Price</label>
+		        <input type="text" ng-model="strikePrice" 
+		    	class="form-control"
+		    	id="strikePrice" 
+		    	placeholder="Strike Price">
+		    </div>
 
-		  <div class="form-group" ng-show="assetClass=='future'">
-		    <label for="strikePrice">Deal Price</label>
-		    <input type="text" ng-model="dealPrice" 
-		    class="form-control"
-		    id="dealPrice" 
-		    placeholder="Deal Price">
-		  </div>
+		  	<div class="form-group col-sm-2" ng-show="assetClass=='future'">
+		    	<label for="strikePrice">Deal Price</label>
+		    	<input type="text" ng-model="dealPrice" 
+		    	class="form-control"
+		    	id="dealPrice" 
+		    	placeholder="Deal Price">
+		    </div>
 
-		  <div class="form-group" ng-show="assetClass=='option'">
-		    <label for="premium">Option Premium</label>
-		    <input type="text" ng-model="premium" 
-		    class="form-control"
-		    id="premium" 
-		    placeholder="Premium">
-		  </div>
+			<div class="form-group col-sm-2" ng-show="assetClass=='option'">
+			    <label for="premium">Option Premium</label>
+			    <input type="text" ng-model="premium" 
+			    class="form-control"
+			    id="premium" 
+			    placeholder="Premium">
+			</div>
 
-		  <div class="form-group">
-		    <label for="premium">Expire Month</label>
-		    <select name="expire" 
-		    id="expire" 
-		    class="form-control" 
-		    ng-model="expire"
-		    ng-options="name for name in expireSelects">
-		    </select>
-		  </div>
+		    <div class="form-group col-sm-2">
+		    	<label for="premium">Expire Month</label>
+		    	<select name="expire" 
+		    	id="expire" 
+		    	class="form-control" 
+		    	ng-model="expire"
+		    	ng-options="name for name in expireSelects">
+		    	</select>
+		    </div>
 
-		  <div class="form-group">
-		    <label for="comission">Comission</label>
-		    <input type="text" ng-model="comission" 
-		    class="form-control"
-		    id="comission" 
-		    placeholder="Comission">		
-		  </div>
+		    <div class="form-group col-sm-2">
+		    	<label for="comission">Comission</label>
+		    	<input type="text" ng-model="comission" 
+		    	class="form-control"
+		    	id="comission" 
+		    	placeholder="Comission">		
+		    </div>
 
-		  <div class="form-group">
-		    <label for="multiplier">Multiplier</label>
-		    <input type="text" 
-		    ng-model="multiplier" 
-		    class="form-control"
-		    id="multiplier" 
-		    placeholder="Multiplier">		
-		  </div>
+		    <div class="form-group col-sm-2">
+		    	<label for="multiplier">Multiplier</label>
+		    	<input type="text" 
+		    	ng-model="multiplier" 
+		    	class="form-control"
+		    	id="multiplier" 
+		    	placeholder="Multiplier">		
+		    </div>
 
-		  <div class="form-group">
-		    <label for="contractNumber">Number of Contract</label>
-		    <input type="text" 
-		    ng-model="contractNumber" 
-		    class="form-control"
-		    id="contractNumber" 
-		    placeholder="Number of Contracts">		
-		  </div>
-
-		  <button type="submit" class="btn btn-primary" 
-		  ng-click="addPortfolio()">Add</button>
-
-		  <button class="btn btn-danger" 
-		  ng-click="plot()">Plot</button>
+		    <div class="form-group col-sm-2 ">
+		    	<label for="contractNumber">No. Contract</label>
+		    	<input type="text" 
+		    	ng-model="contractNumber" 
+		    	class="form-control"
+		    	id="contractNumber" 
+		    	placeholder="Number of Contracts">		
+		  	</div>
 		</form>
+	  	<div class="form-group col-sm-2">
+			<button type="submit" class="btn btn-primary" 
+		  	ng-click="addPortfolio()">Add</button>
+
+		  	<button class="btn btn-danger" 
+		  	ng-click="plot()">Plot</button>
+	  	</div>	
+		
+
+		
+
+		
 	</div>
 	<br>
 
-	<div class="portfolio-container bs-example">
+	<div class="portfolio-container bs-example clearfix">
 		<h4>Options</h4>
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>CALL/PUT</th>
 					<th>Long/Short</th>
+					<th>CALL/PUT</th>
 					<th>Strike Price</th>
-					<th>Number of Contract</th>
+					<th>No. Contract</th>
 					<th>Premium</th>
 					<th>Comission</th>
 					<th>Expire</th>
@@ -136,9 +145,10 @@
 			</thead>
 			<tbody>
 
-				<tr ng-repeat="position in data.portfolio.positions" ng-if="position.instrument.assetClass=='option'">
+				<tr ng-repeat="position in data.portfolio.positions" 
+				ng-if="position.instrument.assetClass=='option'">
+					<td><span click-edit>{{position.instrument.longShort}}</span></td>										
 					<td><span>{{position.instrument.callPut}}</span></td>
-					<td><span>{{position.instrument.longShort}}</span></td>					
 					<td><span>{{position.instrument.strikePrice}}</span></td>
 					<td>{{position.number}} contract(s)</td>
 					<td>{{position.instrument.premium}}</td>
@@ -159,7 +169,7 @@
 					
 					<th>Long/Short</th>
 					<th>Price</th>
-					<th>Number of Contract</th>
+					<th>No. Contract</th>
 
 					<th>Comission</th>
 					<th>Expire</th>
@@ -168,7 +178,8 @@
 			</thead>
 			<tbody>
 
-				<tr ng-repeat="position in data.portfolio.positions" ng-if="position.instrument.assetClass=='future'">
+				<tr ng-repeat="position in data.portfolio.positions" 
+				ng-if="position.instrument.assetClass=='future'">
 
 					<td><span>{{position.instrument.longShort}}</span></td>
 					<td><span>{{position.instrument.dealPrice}}</span></td>
@@ -182,21 +193,7 @@
 
 			</tbody>
 		</table>		
-	<!-- 	<div class="portfolio" ng-repeat="position in data.portfolio.positions">
-			
-			
-			<div class="option" ng-if="position.instrument.assetClass=='option'">
-				<h4>option</h4>
-				{{data.portfolio.positions}}
 
-
-			</div>
-
-			<div class="future" ng-if="position.instrument.assetClass=='future'">
-				<h4>future</h4>
-				{{data.portfolio.positions}}
-			</div>			
-		</div> -->
 	</div>
 
 
@@ -210,8 +207,6 @@
 	<!--  <script type="text/javascript" src="d3-treeLayout.js"></script>
 	 -->
 	 <script src="bower_components/d3/d3.min.js"></script>
-	 <script type="text/javascript" src="d3-scale-axes.js"></script>
-
 
 </body>
 </html>

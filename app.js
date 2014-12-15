@@ -67,9 +67,6 @@ angular.module('optionChart', [])
 				tempOp.multiplier = $scope.multiplier;
 
 				asset = new Option(tempOp);
-
-				console.log('asset', asset);
-
 				
 			}
 
@@ -89,7 +86,6 @@ angular.module('optionChart', [])
 			}
 
 			$scope.data.portfolio.add({instrument: asset, number: $scope.contractNumber });
-			console.info('$scope.data.portfolio', $scope.data.portfolio);
 
 		};
 
@@ -118,11 +114,15 @@ angular.module('optionChart', [])
 		function plot (dataArray) {
 
 
-
-			var margin = {top: 20, right: 10, bottom: 20, left: 10};
-			var padding = {top: 60, right: 60, bottom: 60, left: 60};
 			var outerWidth = 960;
 			var outerHeight = 500;
+
+			// outerWidth - margin = innerWidth
+			// innerWidth - padding = width
+			// width the actual drawing width 
+			var margin = {top: 20, right: 10, bottom: 20, left: 10};
+			var padding = {top: 60, right: 60, bottom: 60, left: 60};
+
 
 			var innerWidth = outerWidth - margin.left - margin.right,
 			    innerHeight = outerHeight - margin.top - margin.bottom;
@@ -154,12 +154,10 @@ angular.module('optionChart', [])
 			var canvas = d3.select('body').append('svg')
 						.attr('width', outerWidth)
 						.attr('height', outerHeight)
-					.append('g') // svg is a 'g' tag
+					.append('g') // canvas is a 'g' tag
 						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-					.append("g") // inner drawing area
+					.append("g") // canvas drawing area
 			    		.attr("transform", "translate(" + padding.left + "," + padding.top + ")");
-
-			var defs = canvas.append('defs');
 
 			    canvas.append("g")
 				    .attr("class", "x axis")
@@ -180,10 +178,32 @@ angular.module('optionChart', [])
 			    .attr('width', function(d){ return 1;})
 			    .attr('height', function(d){ return 1;})
 			    .attr('fill', 'red')
-			    .attr('stroke', 'gray');
+			    .attr('stroke', 'gray')
+			
+			canvas.selectAll('text')
+			.data(function(){ 
+				var tempArr = [];
+				var tempData = dataArray[0];
+				for(var i = 0; i< dataArray.length; i++) {
+					console.log(dataArray[i].y.toFixed(2));
+					if(Math.abs(dataArray[i].y) <= Math.abs(tempData.y) ) {
+						tempData = dataArray[i];
+					}
+				}
+				tempArr.push(tempData);
 
+				console.info('tempData is: ', tempData);
 
+				return tempArr;
 
+				
+			})
+			.enter()
+		  .append('text')
+			  	.text(function(d){ return d.x; })
+			  	// .attr('dx')
+			  	// .attr('dy')
+			  	.style('font-size', '20px');
 
 
 		}
@@ -196,11 +216,9 @@ angular.module('optionChart', [])
 				bodyElem.removeChild(svgElem);
 
 			}
-			console.info('ploting the graph');
 
 			var dataArray = generateData();
 
-			// console.info('dataArray', dataArray);
 			plot(dataArray);
 		};
 

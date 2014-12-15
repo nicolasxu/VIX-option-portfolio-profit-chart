@@ -152,38 +152,52 @@
 				ng-if="position.instrument.assetClass=='option'">
 					<td>
 						<span class="relative" click-edit="select" 
+						model-name="position.instrument.longShort"
 						select-data="longShortSelects">
 							{{position.instrument.longShort}}
 						</span>
 					</td>										
 					<td>
-						<span class="relative" click-edit="select" 
+						<span class="relative" click-edit="select"
+						model-name="position.instrument.callPut"
 						select-data="callPutSelects">
 							{{position.instrument.callPut}}
 						</span>
 					</td>
 					<td>
-						<span class="relative" click-edit="text">
+						<span class="relative"
+						model-name="position.instrument.strikePrice" 
+						click-edit="text">
 							{{position.instrument.strikePrice}}
 						</span>
 					</td>
 					<td >
-						<span class="relative" click-edit="text" append="contract(s)">
+						<span class="relative" 
+						click-edit="text"
+						model-name="position.number"
+						append="contract(s)">
 							{{position.number}} contract(s)
 						</span>
 					</td>
 					<td>
-						<span class="relative" click-edit="text">
+						<span class="relative" 
+						click-edit="text"
+						model-name="position.instrument.premium">
 							{{position.instrument.premium}}
 						</span>
 					</td>
 					<td>
-						<span class="relative" click-edit="text">
+						<span class="relative" 
+						click-edit="text"
+						model-name="position.instrument.comission">
 							{{position.instrument.comission}}
 						</span>
 					</td>
 					<td>
-						<span class="relative" click-edit="select" select-data="expireSelects">
+						<span class="relative"
+						model-name="position.instrument.expire"
+						click-edit="select" 
+						select-data="expireSelects">
 							{{position.instrument.expire}}
 						</span>
 					</td>
@@ -217,12 +231,44 @@
 				<tr ng-repeat="position in data.portfolio.positions" 
 				ng-if="position.instrument.assetClass=='future'">
 
-					<td><span>{{position.instrument.longShort}}</span></td>
-					<td><span>{{position.instrument.dealPrice}}</span></td>
-					<td>{{position.number}} contract(s)</td>
-					<td>{{position.instrument.comission}}</td>
-					<td>{{position.instrument.expire}}</td>
-					<td><a href="javascript:;" ng-click="removePosition($index)"><span class="glyphicon glyphicon-remove" ></span></a></td>
+					<td>
+						<span class="relative" click-edit="select" 
+						model-name="position.instrument.longShort"
+						select-data="longShortSelects">
+							{{position.instrument.longShort}}
+						</span>
+					</td>
+					<td>
+						<span class="relative" click-edit="text"
+						model-name="position.instrument.dealPrice">
+							{{position.instrument.dealPrice}}
+						</span>
+					</td>
+					<td>
+						<span class="relative" click-edit="text"
+						model-name="position.number">
+							{{position.number}} contract(s)
+						</span>
+					</td>
+					<td>
+						<span class="relative" click-edit="text"
+						model-name="position.instrument.comission">
+							{{position.instrument.comission}}
+						</span>
+					</td>
+					<td>
+						<span class="relative" click-edit="select"
+						model-name="position.instrument.expire"
+						select-data="expireSelects">
+							{{position.instrument.expire}}
+						</span>
+					</td>
+					<td>
+						<a href="javascript:;" 
+						ng-click="removePosition($index)">
+							<span class="glyphicon glyphicon-remove" ></span>
+						</a>
+					</td>
 					
 					
 				</tr>
